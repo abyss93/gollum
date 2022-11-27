@@ -85,7 +85,6 @@ class MailBuilder
         " + @message + 
         "</body>
     </html>"
-        puts html
         return html 
     end
 

@@ -28,6 +28,27 @@ class Article
         return article_datetime < comparison_date
     end
 
+    def check_for_cve
+        return @description.scan(/CVE-[0-9]{4}-[0-9]+/)
+    end
+
+    def cve_output
+        res_html = ""
+        cve_list = Set.new(check_for_cve) # remove duplicates
+        if cve_list != []
+            cve_list_html = ""
+            cve_list.each do |cve|
+                cve_list_html += "<li><a href=\"https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=#{cve}\">#{cve}</a></li>\n"
+            end
+            res = "
+                    <br>
+                    <ul>
+                        #{cve_list_html}
+                    </ul>"
+        end
+        return res
+    end
+
     # eql? abd hash methods used bu uniq!
     def eql?(other_obj)
         @link.eql?(other_obj.link)
@@ -46,7 +67,7 @@ class Article
     end
 
     def to_mail_format
-        "<tr><td><a href=\"#{@link}\"><b>#{@title}</b></a></td><td><i>#{@source}</i></td><td><i>#{keyword_matches.join(', ')}</i></td>"
+        "<tr><td><a href=\"#{@link}\"><b>#{@title}</b></a>#{cve_output}</td><td><i>#{@source}</i></td><td><i>#{keyword_matches.join(', ')}</i></td>"
     end
 
     private
