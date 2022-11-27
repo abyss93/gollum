@@ -38,4 +38,5 @@ Output is returned in JSON format, it could be of some use.
   <li>write some more builders to have a copy-paste output usable to format the message on other platform (e.g. slack/telegram)</li>
   <li>[WIP] some details of the email will be configured editing the configuration file</li>
   <li>social network sources</li>
+  <li>A little bit of code cleaning, even if there is nothing difficult to understand. Unit tests could also be made, but I think it would be over the needs as of now</li>
 </ul>
