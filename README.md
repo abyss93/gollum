@@ -31,7 +31,9 @@ and follow the instructions in the help menu. Typically the command will probabl
 Output is returned in JSON format, it could be of some use.
 
 <h2>TODO</h2>
-- NLP features (clustering, priority of topics, ...) {WIP}
-- write some more builders to have a copy-paste output usable to format the message on other platform (e.g. slack/telegram)
-- some details of the email will be configured editing the configuration file {WIP}
-- social network sources
+<ul>
+  <li>[WIP] NLP features (clustering, priority of topics, ...)</li>
+  <li>write some more builders to have a copy-paste output usable to format the message on other platform (e.g. slack/telegram)</li>
+  <li>[WIP] some details of the email will be configured editing the configuration file</li>
+  <li>social network sources</li>
+</ul>
