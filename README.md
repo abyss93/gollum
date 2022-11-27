@@ -1,3 +1,4 @@
+![gollum_logo](https://github.com/santinilorenzo/gollum/blob/master/gollum.png?raw=true) 
 # Gollum
 
 RSS/Atom feed parser and filter. Keyword-based. I use this script to stay up-to-date with topics I'm interested in.
