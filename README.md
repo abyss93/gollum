@@ -1,11 +1,13 @@
 <h1><img src="https://github.com/santinilorenzo/gollum/blob/master/gollum.png?raw=true"> GOLLUM</h1>
 
 RSS/Atom feed parser and filter. Keyword-based. I use this script to stay up-to-date with topics I'm interested in.
-What could be done is create a CRON line on a 24h powered on node and periodically (one or two times a day) run the script, that will send an email with updates after some processing. This is also my used of the script as per regards Cybersecurity news.
+What could be done is create a CRON line on a 24h powered on node and periodically (one or two times a day) run the script, that will send an email with updates after some processing. This is also my used of the script as per regards Cybersecurity news, the script has at least one feature dedicated to Cybersecurity, CVE fast links, however it can be used with any feed.
+
+As a default setting, only articles published in the last 24H are scanned by Gollum, since the script has originally been thought to run everyday.
 
 <h2>Configuration</h2>
 
-Configuration files:
+Configuration files (.example files are present):
 ```
 sources.xml
 ```
