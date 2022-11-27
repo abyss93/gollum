@@ -42,13 +42,13 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-mail_service_configuration = YAML.load_file('mail_config.yml')
+mail_service_configuration = YAML.load_file('./config/mail_config.yml')
 mail_service = MailService.new(mail_service_configuration)
 mail_builder = mail_service.get_mail_builder
 rss_sources = Utils.get_rss_sources
 
 
-keywords = File.open('keywords')
+keywords = File.open('./config/keywords')
                .readlines
                .select {|line| line[0] != '#'}
                .map { |k| k.downcase.gsub(' ','').gsub("\n",'') }

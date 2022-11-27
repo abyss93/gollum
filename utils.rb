@@ -14,7 +14,7 @@ module Utils
 
     def Utils.get_rss_sources
         result = []
-        rss_file = File.open('sources.xml').read
+        rss_file = File.open('./config/sources.xml').read
         xml_sources = Nokogiri::XML(rss_file) do |config|
             # NONET - Prevent any network connections during parsing. Recommended for parsing untrusted documents. This is set by default!
             # RECOVER - Attempt to recover from errors. Recommended for parsing malformed or invalid documents. This is set by default!

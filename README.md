@@ -1,4 +1,4 @@
-<h1><img src="https://github.com/santinilorenzo/gollum/blob/master/gollum.png?raw=true"> GOLLUM</h1>
+<h1><img src="https://github.com/santinilorenzo/gollum/blob/master/logo/gollum.png?raw=true"> GOLLUM</h1>
 
 RSS/Atom feed parser and filter. Keyword-based. I use this script to stay up-to-date with topics I'm interested in.
 What could be done is create a CRON line on a 24h powered on node and periodically (one or two times a day) run the script, that will send an email with updates after some processing. This is also my used of the script as per regards Cybersecurity news.
