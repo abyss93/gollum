@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<opml version="1.0">
+    <head>
+        <title>Security mailing list sources</title>
+    </head>
+    <body>
+        <outline text="Security Feeds" title="Security Feeds">
+            <outline type="rss" text="Red Hot Cyber" title="Red Hot Cyber" xmlUrl="https://www.redhotcyber.com/feed/gn" htmlUrl="https://www.redhotcyber.com"/>
+            <!-- PLACE OTHER SOURCES HERE -->
+        </outline>
+    </body>
+</opml>

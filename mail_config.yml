@@ -1,0 +1,17 @@
+# headers
+sender: "frodo@baggins.com"
+recipient: "sam@gamgee.com"
+subject: "The Shire News"
+
+# choose articles' table style [TODO]
+color: "2b2f76"
+background_color: "5bc0d4"
+
+# header (hello), html can be used
+header_html: "Good morning,<br>here are the most interesting articles from the daily feed<br>"
+# footer (bye), html can be used
+footer_html: "<br>Best Regards,<br><br>Gollum"
+
+# One BASE64 image ca be placed on top of the header_html content
+images:
+ - 
