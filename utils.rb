@@ -9,8 +9,7 @@ module Utils
         end
     end
 
-    TODAY = Time.now
-    THRESHOLD_TIME = Time.mktime(TODAY.year, TODAY.month, TODAY.day - 1, TODAY.hour, TODAY.min).utc
+    THRESHOLD_TIME = Time.now.utc - (3600 * 24)
 
     def Utils.get_rss_sources
         result = []

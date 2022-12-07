@@ -44,7 +44,6 @@ class MailBuilder
     end
 
     def build
-        puts 'Building HTML'
         html = "
     <html>
         <head>

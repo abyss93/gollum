@@ -8,6 +8,7 @@ require 'yaml'
 require 'optparse'
 require 'json'
 require_relative 'mail_service'
+require_relative 'slack_builder'
 require_relative 'article'
 require_relative 'utils'
 require_relative 'similarity'
@@ -29,7 +30,7 @@ OptionParser.new do |opts|
     options[:other_articles] = v
   end
   opts.on("-c", "--cluster", "Apply some basic NLP to cluster similar articles, topics are inferred from articles' title (WIP)") do |v|
-    options[:similarity] = v
+    options[:cluster] = v
   end
   opts.on("-d", "--debug", "Enables logging on STDOUT") do |v|
     options[:debug] = v
@@ -40,11 +41,15 @@ OptionParser.new do |opts|
   opts.on("-j", "--json", "Return results in JSON format") do |v|
     options[:json_format] = v
   end
+  opts.on("-s", "--slack", "Return results in Slack markdown to copy-paste them") do |v|
+    options[:slack] = v
+  end
 end.parse!
 
 mail_service_configuration = YAML.load_file('./config/mail_config.yml')
 mail_service = MailService.new(mail_service_configuration)
 mail_builder = mail_service.get_mail_builder
+slack_builder = SlackBuilder.new(mail_service_configuration['header_html'], mail_service_configuration['footer_html'])
 rss_sources = Utils.get_rss_sources
 
 
@@ -88,9 +93,11 @@ end
 keyword_articles.uniq!
 other_articles.uniq!
 
-# look for similar articles to group
-Similarity.execute(keyword_articles, options[:debug]) if options[:similarity]
-Similarity.execute(other_articles, options[:debug]) if options[:other_articles] and options[:similarity]
+# look for similar articles to cluster
+if options[:cluster]
+  keyword_articles = Similarity.execute(keyword_articles, options[:debug])
+  other_articles = Similarity.execute(other_articles, options[:debug]) if options[:other_articles]
+end
 
 # print summary of findings
 if options[:debug]
@@ -109,7 +116,16 @@ if options[:email]
   to_send.add_articles(other_articles) if options[:other_articles]
   to_send = to_send.add_footer
                  .build
-  mail_service.send_mail(to_send, options[:debug])
+  mail_service.send_mail(to_send, "", options[:debug])
+end
+
+if options[:slack]
+  to_send = slack_builder.add_header
+              .add_articles(keyword_articles.sort_by {|ar| ar.keyword_matches})
+  to_send.add_articles(other_articles) if options[:other_articles]
+  to_send = to_send.add_footer
+                 .build
+  mail_service.send_mail("", to_send, options[:debug])
 end
 
 # return results

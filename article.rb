@@ -29,22 +29,65 @@ class Article
     end
 
     def check_for_cve
-        return @description.scan(/CVE-[0-9]{4}-[0-9]+/)
+        return @description.scan(/CVE-[0-9]{4}-[0-9]+/) if not @description.nil?
     end
 
     def cve_output
         res_html = ""
         cve_list = Set.new(check_for_cve) # remove duplicates
-        if cve_list != []
+        if !cve_list.empty?
             cve_list_html = ""
             cve_list.each do |cve|
                 cve_list_html += "<li><a href=\"https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=#{cve}\">#{cve}</a></li>\n"
             end
-            res = "
+            res_html = "
                     <br>
+                    <i>   > Related CVEs</i>
                     <ul>
                         #{cve_list_html}
                     </ul>"
+        end
+        return res_html
+    end
+
+    def similar_articles_output
+        res_html = ""
+        similar_articles_html = ""
+        if @similar_articles != []
+            similar_articles.each do |article|
+                similar_articles_html += "<li><a href=\"#{article.link}\">#{article.title}</a></li>\n"
+            end
+            res_html = "
+                    <br>
+                    <i>   > Similar articles</i>
+                    <ul>
+                        #{similar_articles_html}
+                    </ul>"
+        end
+        return res_html
+    end
+
+    def similar_articles_output_slack
+        res = ""
+        if @similar_articles != []
+            similar_articles_out = ""
+            similar_articles.each do |article|
+                similar_articles_out += "\t\t[#{article.title}](#{article.link})\n"
+            end
+            res = "\t> Similar articles\n#{similar_articles_out}"
+        end
+        return res
+    end
+
+    def cve_output_slack
+        res = ""
+        cve_list = Set.new(check_for_cve) # remove duplicates
+        if !cve_list.empty?
+            cve_list_out = ""
+            cve_list.each do |cve|
+                cve_list_out += "\t\t[#{cve}](https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=#{cve})\n"
+            end
+            res = "\t> Related CVEs</i>\n#{cve_list_out}"
         end
         return res
     end
@@ -67,7 +110,11 @@ class Article
     end
 
     def to_mail_format
-        "<tr><td><a href=\"#{@link}\"><b>#{@title}</b></a>#{cve_output}</td><td><i>#{@source}</i></td><td><i>#{keyword_matches.join(', ')}</i></td>"
+        "<tr><td><a href=\"#{@link}\"><b>#{@title}</b></a>#{cve_output}#{similar_articles_output}</td><td><i>#{@source}</i></td><td><i>#{keyword_matches.join(', ')}</i></td>"
+    end
+
+    def to_slack_markdown
+        "* [#{@title}](#{@link})\n#{cve_output_slack}\n#{similar_articles_output_slack}"
     end
 
     private

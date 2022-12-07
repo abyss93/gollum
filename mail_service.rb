@@ -20,7 +20,7 @@ class MailService
     return MailBuilder.new(@color, @background_color, @images, @header_html, @footer_html)
   end
 
-  def send_mail(html_body, debug)
+  def send_mail(html_body, text_body="", debug=false)
     sender = @sender
     recipient = @recipient
     subject = @subject
@@ -28,12 +28,16 @@ class MailService
       from    sender
       to      recipient
       subject subject
-      #text_part do
-      #  body 'Put your plain text here'
-      #end
-      html_part do
-        content_type 'text/html; charset=UTF-8'
-        body html_body
+      if text_body != ""
+        text_part do
+          body text_body
+        end
+      end
+      if html_body != ""
+        html_part do
+          content_type 'text/html; charset=UTF-8'
+          body html_body
+        end
       end
     end
   
